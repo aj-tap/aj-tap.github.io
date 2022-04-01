@@ -1,0 +1,69 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><title>Home | ajtap</title><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../../assets/img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32x32.png"><link rel="icon" type="image/png" sizes="180x180" href="../../assets/img/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="../../assets/img/android-chrome-192x192.png"><link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/android-chrome-512x512.png"><link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Anonymous+Pro&amp;display=swap"><link rel="stylesheet" href="../../assets/fonts/fontawesome-all.min.css"><link rel="stylesheet" href="../../assets/fonts/font-awesome.min.css"><link rel="stylesheet" href="../../assets/fonts/material-icons.min.css"><link rel="stylesheet" href="../../assets/fonts/fontawesome5-overrides.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"></head><body id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="72" style="background: #282A36;"><nav class="navbar navbar-dark navbar-expand-md" style="background: #282A36;"><div class="container-fluid"><a class="navbar-brand" href="../../index.html" style="font-size: 32px;margin-left: 24px;"><i class="fa fa-terminal flash animated infinite"></i>&nbsp;ajtap</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navbarNav"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav ms-auto"><li class="nav-item"><a class="nav-link" href="../../index.html">WriteUps</a></li><li class="nav-item"><a class="nav-link" href="../../index.html">Infosec</a></li><li class="nav-item"><a class="nav-link" href="../../index.html">About</a></li></ul></div></div></nav><section style="font-family: 'Anonymous Pro', monospace;"><div class="container"><h1 data-aos="fade" style="color: #ff79c6;text-align: center;font-family: 'Anonymous Pro', monospace;">KVM Malware Setup</h1><hr style="color: rgb(139,233,253);height: 6px;width: 248px;"></div><div class="container"><div class="row"><div class="col-md-12"><div class="text-center" style="background: #44475a;color: rgb(255,255,255);text-align: left;"><i class="material-icons text-center" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" style="font-size: 97px;color: #8be9fd;">bug_report</i><p style="text-align: left;"><div style="text-align:left;">
+<h3 id="setting-up-windows-and-remnux-cyber_labs-">Setting up Windows and Remnux (Cyber_labs)</h3>
+<hr>
+<ol>
+<li><p>Download ova then unzip it.</p>
+</li>
+<li><p>Convert Windows ova to qcow format. </p>
+<pre><code> <span class="hljs-selector-tag">tar</span> <span class="hljs-selector-tag">-xvf</span> <span class="hljs-selector-tag">MSEdge</span>\ <span class="hljs-selector-tag">-</span>\ <span class="hljs-selector-tag">Win10</span><span class="hljs-selector-class">.ova</span>
+ <span class="hljs-selector-tag">qemu-img</span> <span class="hljs-selector-tag">convert</span> <span class="hljs-selector-tag">-O</span> <span class="hljs-selector-tag">qcow2</span> <span class="hljs-selector-tag">MSEdge</span>\ <span class="hljs-selector-tag">-</span>\ <span class="hljs-selector-tag">Win10-disk001</span><span class="hljs-selector-class">.vmdk</span> <span class="hljs-selector-tag">windows</span><span class="hljs-selector-class">.qcow2</span>
+ <span class="hljs-selector-tag">qemu-img</span> <span class="hljs-selector-tag">resize</span> <span class="hljs-selector-tag">windows</span><span class="hljs-selector-class">.qcow2</span> +30<span class="hljs-selector-tag">G</span>
+</code></pre></li>
+</ol>
+<p>Note:  when you boot your windows proceed to <em>diskmanagement</em> and <em>extend volume</em> of the disk, FlareVM requires 60GB memory.  </p>
+<ol>
+<li><p>Convert remnux ova to qcow format. </p>
+<pre><code> tar -xvf remnux-v7-focal<span class="hljs-selector-class">.ova</span>
+ qemu-<span class="hljs-selector-tag">img</span> convert -O qcow2 *<span class="hljs-selector-class">.vmdk</span> remnux.qcow2
+</code></pre></li>
+<li><p>Setting up Network configuration</p>
+<blockquote>
+<p>Virtual machine manager -&gt; edit -&gt;  -&gt; connection details -&gt; add network </p>
+<ol>
+<li>Setting up Isolated network adapter. <ol>
+<li>I set my isolated network change in 192.168.20.0/24 but you can set yours IP addresses defined in <a href="https://tools.ietf.org/html/rfc1918">https://tools.ietf.org/html/rfc1918</a> .</li>
+<li>Setting up NAT adapter I just choosed the default one.</li>
+</ol>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>Import windows and remnux into kvm. </p>
+<blockquote>
+<p>Virtual machine manager -&gt; File -&gt; New Virtual machine -&gt; Import existing disk image -&gt; specify storage path of qcow disk of windows/remnux -&gt; Specify Memory and CPU -&gt; Network selection, click the isolated network adapter -&gt; finish.</p>
+</blockquote>
+</li>
+</ol>
+<p>Note: In windows, remove Usb Redirector and tablet hardware on details section. </p>
+<ol>
+<li>Booting up Remnux. <ol>
+<li>Setting up Network <ol>
+<li>Isolated network <pre><code>ip -br <span class="hljs-keyword">a</span>  <span class="hljs-comment"># check the name of network adapter. </span>
+sudo nano /etc/netplan/<span class="hljs-number">01</span>-netcfg.yaml <span class="hljs-comment"># put the static ip addr.</span>
+reboot
+ip addr
+fakedns <span class="hljs-comment"># test it out perform a ping on windows machine</span>
+</code></pre></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>Repeat process, attached NAT adapter.</p>
+</li>
+<li><p>Booting up Windows.</p>
+<ol>
+<li>Setup and Install FlareVM.</li>
+</ol>
+</li>
+</ol>
+<h3 id="references">References</h3>
+<ul>
+<li><a href="https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/">https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/</a></li>
+<li><a href="https://docs.remnux.org/install-distro/get-virtual-appliance">https://docs.remnux.org/install-distro/get-virtual-appliance</a></li>
+<li><a href="https://github.com/mandiant/flare-vm">https://github.com/mandiant/flare-vm</a></li>
+<li><a href="https://www.howtogeek.com/howto/15788/how-to-uninstall-disable-and-remove-windows-defender.-also-how-turn-it-off/">https://www.howtogeek.com/howto/15788/how-to-uninstall-disable-and-remove-windows-defender.-also-how-turn-it-off/</a></li>
+<li><a href="https://www.whonix.org/wiki/KVM#Why_Use_KVM_Over_VirtualBox?">https://www.whonix.org/wiki/KVM#Why_Use_KVM_Over_VirtualBox?</a> </li>
+</ul>
+
+</div>
+</p></div></div></div></div></section><div class="text-center text-white copyright py-4"><div class="container"><small>Copyright ©&nbsp;ajtap 2022</small></div></div><script src="../../assets/bootstrap/js/bootstrap.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script><script src="../../assets/js/script.min.js"></script></body></html>
