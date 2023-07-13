@@ -18,6 +18,7 @@ Building your own portable Parrot Raspberry Pi is a good option if you want to d
 
 ## Setup  
 1 . Download [Raspberry Pi Parrot OS Image](https://www.parrotsec.org/download/)
+
 2 . Mount the micro-SD card then flash the image using BalenaEtcher.
 
 ![]({{site.baseurl}}/assets/img/2023-07-13-Portable-Hacking-Station-5.jpg){:width="70%"}
