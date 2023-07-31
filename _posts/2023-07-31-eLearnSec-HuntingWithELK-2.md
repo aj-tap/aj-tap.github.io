@@ -52,7 +52,7 @@ To initiate the hunt for RDP settings tampering, we can begin our query by filte
 The query returned one hit, the threat actor used the "netsh" command to add a firewall rule named "Remote Desktop" with TCP port 3389 allowed for inbound traffic. This could potentially grant unauthorized access through RDP. [ref](https://attack.mitre.org/techniques/T1021/001/)
 
 ## Task 4. Hunt for DCSync
-Hunting for DCSync, we can use this [Sigma rule]([https://github.com/Neo23x0/sigma/blob/master/rules/windows/builtin/win_dcsync.yml](https://github.com/Neo23x0/sigma/blob/master/rules/windows/builtin/win_dcsync.yml)) The rule searches for event ID 4662, which is often related to permissions modifications in Active Directory. To eliminate common legitimate accounts, it excludes user names ending with "*" and specific built-in accounts such as "AUTHORITY" and "Window." The rule focuses on objects with properties matching the DCSync schema identifier (1131f6ad-9c07-11d1-f79f-00c04fc2dcd2) or objects related to replication (object.properties:Replicating). 
+Hunting for DCSync, we can use sigma rule DCSync. The rule searches for event ID 4662, which is often related to permissions modifications in Active Directory. To eliminate common legitimate accounts, it excludes user names ending with "*" and specific built-in accounts such as "AUTHORITY" and "Window." The rule focuses on objects with properties matching the DCSync schema identifier (1131f6ad-9c07-11d1-f79f-00c04fc2dcd2) or objects related to replication (object.properties:Replicating). 
 
 ```
 event.id:4662 AND NOT (user.name:*$ OR user.name:AUTHORITY OR user.name:Window) AND (object.properties:1131f6ad-9c07-11d1-f79f-00c04fc2dcd2 OR object.properties:Replicating)
