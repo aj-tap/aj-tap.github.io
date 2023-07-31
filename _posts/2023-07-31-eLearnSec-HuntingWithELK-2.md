@@ -9,7 +9,7 @@ tags: [eLearn, threat_hunting, elk, kibana, siem]
 The IT Security manager provided you with simulated malicious activity and has asked you to create hunting detection techniques for all of it.
 
 ## Task 1. Hunt for malicious use of rundll32
-By employing the [Sigma](https://github.com/SigmaHQ/sigma/blob/08ca62cc8860f4660e945805d0dd615ce75258c1/rules/windows/process_creation/win_susp_rundll32_activity.yml) win_susp_rundll32_activity.yml rules, we can effectively detect and identify processes associated with the malicious utilization of rundll32.
+By employing the sigma rules win_susp_rundll32_activity.yml rules, we can effectively detect and identify processes associated with the malicious utilization of rundll32.
 
 ```
 ((process.args:("*javascript\:*" OR "*.RegisterXLL*")) OR ((process.args:"*url.dll*" AND process.args:"*OpenURL*")) OR ((process.args:"*url.dll*" AND process.args:"*OpenURLA*")) OR ((process.args:"*url.dll*" AND process.args:"*FileProtocolHandler*")) OR ((process.args:"*zipfldr.dll*" AND process.args:"*RouteTheCall*")) OR ((process.args:"*shell32.dll*" AND process.args:"*Control_RunDLL*")) OR ((process.args:"*shell32.dll*" AND process.args:"*ShellExec_RunDLL*")) OR ((process.args:"*mshtml.dll*" AND process.args:"*PrintHTML*")) OR ((process.args:"*advpack.dll*" AND process.args:"*LaunchINFSection*")) OR ((process.args:"*advpack.dll*" AND process.args:"*RegisterOCX*")) OR ((process.args:"*ieadvpack.dll*" AND process.args:"*LaunchINFSection*")) OR ((process.args:"*ieadvpack.dll*" AND process.args:"*RegisterOCX*")) OR ((process.args:"*ieframe.dll*" AND process.args:"*OpenURL*")) OR ((process.args:"*shdocvw.dll*" AND process.args:"*OpenURL*")) OR ((process.args:"*syssetup.dll*" AND process.args:"*SetupInfObjectInstallAction'*")) OR ((process.args:"*setupapi.dll*" AND process.args:"*InstallHinfSection*")) OR ((process.args:"*pcwutl.dll*" AND process.args:"*LaunchApplication*")) OR ((process.args:"*dfshim.dll*" AND process.args:"*ShOpenVerbApplication*")))
@@ -97,14 +97,13 @@ The presence of one hit indicates the usage of "sdclt.exe" with the argument "ki
 
 ## Reference 
 - <https://github.com/RESOLVN/RTHVM> 
-- <https://github.com/SigmaHQ/sigma/blob/08ca62cc8860f4660e945805d0dd615ce75258c1/rules/windows/process_creation/win_susp_rundll32_activity.yml>
 - <https://attack.mitre.org/techniques/T1218/011/>
 - <https://attack.mitre.org/techniques/T1548/002/>
 - <https://github.com/rootm0s/WinPwnage#uac-bypass-techniques>
 - <https://attack.mitre.org/techniques/T1021/001/>
-- <https://github.com/Neo23x0/sigma/blob/master/rules/windows/builtin/win_dcsync.yml>
 - <https://d3fend.mitre.org/offensive-technique/attack/T1003.006/>
 - <https://attack.mitre.org/techniques/T1047/>
 - <https://attack.mitre.org/techniques/T1218/005/>
 - <https://enigma0x3.net/2017/03/17/fileless-uac-bypass-using-sdclt-exe/>
 - <https://pentestlab.blog/2017/06/09/uac-bypass-sdclt/> 
+- https://github.com/Neo23x0/sigma/blob/master/rules/windows/builtin/win_dcsync.yml
