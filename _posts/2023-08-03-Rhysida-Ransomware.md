@@ -4,7 +4,7 @@ categories: [Malware_Analysis Reverse_Engineering]
 tags: [Rhysida, ransomware, malware]
 ---
 
-![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware.jpg){: width="972" height="589" }
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-22.jpg){: width="972" height="589" }
 ## Summary 
 The Rhysida ransomware group uses phishing attacks to infiltrate their targets' networks. They deploy payloads on compromised systems using tools like Cobalt Strike or similar command-and-control frameworks. The gang's malware employs the ChaCha20 algorithm, but it is still in development and lacks certain features in other ransomware strains. The group threatens to publicly disclose the exfiltrated data, aligning with the methods commonly seen among modern multi-extortion groups.The group first came to public attention in May 2023, when their victim support chat portal was discovered using TOR (.onion). They disguise themselves as a "cybersecurity team," claiming to assist victims by hacking into their systems and exposing security flaws.
 
@@ -15,61 +15,72 @@ The Rhysida ransomware group uses phishing attacks to infiltrate their targets' 
 | fury.exe | 258ddd78655ac0587f64d7146e52549115b67465302c0cbd15a0cba746f05595 | 
 
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-1.jpg){: width="972" height="589" }
-_Figure 1 –  CFF Explorer and Detect it Easy shows MinGW (mingw32) was used to compile the sample, which was written in C++. It was unpacked and 418.00 KiB in size._
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware.jpg){: width="972" height="589" }
 
-![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-1.png{: width="972" height="589" }
+Figure 1 –  CFF Explorer and Detect it Easy shows MinGW (mingw32) was used to compile the sample, which was written in C++. It was unpacked and 418.00 KiB in size.
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-2.jpg){: width="972" height="589" }
-_Figure 2 –  The analysis indicates that the binary file consists of 9 sections. Notably, the ".data" section displays high entropy, that is likely packed or encrypted._
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-23.jpg){: width="972" height="589" }
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-3.jpg){: width="972" height="589" }
-_Figure 3 –  Yara detected functions like ThreadControl__Context, anti_dbg, and RijnDael_AES, indicating possible thread management, anti-debugging measures, and the use of Rijndael AES encryption within the binary. The YARA rules suggest specific patterns or characteristics targeted by the binary's behavior._
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-24.jpg){: width="972" height="589" }
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-4.jpg){: width="972" height="589" }
-_Figure 4 –  Capa result of Rhysida Ransomware: Obfuscation, shared modules for evasion, cryptography with pseudo-random sequences, Base64 and XOR encoding, file and directory discovery, and host system interaction for file handling, thread management, and process termination._
+Figure 2 –  The analysis indicates that the binary file consists of 9 sections. Notably, the ".data" section displays high entropy, that is likely packed or encrypted.
+
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-25.jpg){: width="972" height="589" }
+
+Figure 3 –  Yara detected functions like ThreadControl__Context, anti_dbg, and RijnDael_AES, indicating possible thread management, anti-debugging measures, and the use of Rijndael AES encryption within the binary. The YARA rules suggest specific patterns or characteristics targeted by the binary's behavior.
+
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-26.jpg){: width="972" height="589" }
+
+Figure 4 –  Capa result of Rhysida Ransomware: Obfuscation, shared modules for evasion, cryptography with pseudo-random sequences, Base64 and XOR encoding, file and directory discovery, and host system interaction for file handling, thread management, and process termination.
 
 ## Reverse Engineering
 ### Main Routine
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-5.jpg){: width="972" height="589" }
-_Figure  5 – Main function graph of Rhysida Ransomware_
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-27.jpg){: width="972" height="589" }
+
+Figure  5 – Main function graph of Rhysida Ransomware
 
 The Rhysida ransomware main routine is  a multi-threaded file processing application. It starts by initializing various data structures and resources required for file processing. It then imports an RSA key, registers AES encryption and CHC hashing algorithms. After the setup, it repeatedly runs a file processing loop using multiple threads. The application processes files in directories specified in the command-line arguments or all available drive letters if no arguments are provided. It calculates various statistics and keeps track of empty directories. The loop continues for a fixed number of iterations. Once the processing is complete, it frees up allocated resources and runs a PowerShell script to remove the application from the system if the command-line parameter dictates so. Finally, the routine returns 0 to indicate successful completion.
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-6.jpg){: width="972" height="589" }
-_Figure  6 –  First routine of the ransomware  performs  several memory allocation and initialization operations._
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-28.jpg){: width="972" height="589" }
+
+Figure  6 –  First routine of the ransomware  performs  several memory allocation and initialization operations.
 
 The initial part of the ransomware code performs several tasks to set up data structures and initialize resources for subsequent program execution. It starts by obtaining the current time to seed the random number generator and retrieving the current working directory. The system information, including the number of processors, is gathered using GetSystemInfo(). Memory is then allocated for various data structures like which appear to be related to file queries and locking information. Mutexes are initialized using mutex_init() for synchronization purposes. Finally, a specific block of data is copied from a known location to a newly allocated memory address.
 
 ### Encryption Routine 
 
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-7.jpg){: width="972" height="589" }
-_Figure 7  – Overview of encryption routine of Rhysida Ransomware in IDA_
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-29.jpg){: width="972" height="589" }
+
+Figure 7  – Overview of encryption routine of Rhysida Ransomware in IDA
 
 The Encryption routine of the ransomware sets up cryptographic functionalities. It begins by initializing the ChaCha20 pseudo-random number generator (PRNG) and defining its characteristics. Next, an RSA-4096 public key is imported, then registers the Advanced Encryption Standard (AES) cipher, known for its strong encryption capabilities. A constant named CIPHER is defined, signifying that AES will be the chosen cipher throughout the program. The process continues by enabling the Cipher Hash Construction (CHC) hash type, which allows using AES as a hash function. AES is then registered as the block cipher for the CHC hash. Finally, a constant HASH_IDX is defined, representing the CHC hash, providing a complete setup of cryptographic features. The encryption modules in the Rhysida ransomware payload were created by the authors of the ransomware using the open-source library **LibTomCrypt**.
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-8.jpg){: width="972" height="589" }
-_Figure  8 – Overview of chacha20 pseudo-random number generator (PRNG) function in IDA_
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-30.jpg){: width="972" height="589" }
+
+Figure  8 – Overview of chacha20 pseudo-random number generator (PRNG) function in IDA
 
 The initialize_PRNG function is responsible for initializing a pseudo-random number generator (PRNG) based on the ChaCha20 cipher algorithm. It first sets the PRNG index by calling get_PRNG_index with a pointer to the PRNG implementation, and if the index is -1, it indicates that the PRNG implementation is not available, leading to the function returning an error code. Next, it starts the initialization process of the ChaCha20 PRNG with the provided seed, and if this initialization fails, the function returns an error. The function then checks if the PRNG is ready for use, and if not, it returns another error code. To add additional unpredictability, the function generates a 40-byte entropy buffer filled with random bytes and adds it to the PRNG state. If adding entropy fails, it returns an error. After that, it generates a random value and allocates memory of that size. Using this memory block, it updates the PRNG state with additional randomness. Finally, the allocated memory is freed, and the function returns a success code, indicating that the ChaCha20 PRNG has been successfully initialized and is ready for generating pseudo-random numbers based on the provided seed.
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-9.jpg){: width="972" height="589" }
-_Figure 9 – RSA Import routine decoded code using IDA_
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-31.jpg){: width="972" height="589" }
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-10.jpg){: width="972" height="589" }
-_Figure  10 – RSA public key and CriticalBreachDetected.pdf in memory dump using x64 debugger and HxD tool_
+Figure 9 – RSA Import routine decoded code using IDA
+
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-32.jpg){: width="972" height="589" }
+
+Figure  10 – RSA public key and CriticalBreachDetected.pdf in memory dump using x64 debugger and HxD tool
 
 The rsa_import function is responsible for importing an RSA key pair. It takes key_data, a2, and rsa_key as input parameters, where key_data represents the raw RSA key data, a2 is the size of the data, and rsa_key is a pointer to the location where the imported key will be stored. The function first validates the input parameters and initializes the RSA key. It then allocates a temporary buffer to hold some intermediate data. Next, it attempts to import the RSA key data using the sub_424880 function and performs various RSA operations to validate and set up the key. If all operations are successful, the rsa_key is marked as valid. The function returns an error code to indicate the success or failure of the key import process. It's worth noting that some parts of the code may be dependent on external RSA-related libraries or functions, which are not shown in this code snippet.
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-11.jpg){: width="972" height="589" }
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-33.jpg){: width="972" height="589" }
 _Figure 11  – When keys are encrypted with RSA, the Cryptographic Hash Construction (CHC) hash is used to generate cipher Initialization Vectors (IVs)_
 
 ### Encryption Process of the drive 
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-12.jpg){: width="972" height="589" }
-_Figure  12 – Decompiled code of encryption process routine of the ransomware._
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-34.jpg){: width="972" height="589" }
+
+Figure  12 – Decompiled code of encryption process routine of the ransomware.
 
 The ransomware sets the AES key size to 32 bytes and initializes various global statistics and flags required for encryption. It then starts multiple threads, each representing a processor on the system, to enable parallel file processing. These threads will execute the function processFiles_Encrypt to encrypt the files concurrently. Once the file is encrypted it will add following extension
 
@@ -81,42 +92,50 @@ The OpenDriveDirectory function processes files and directories located on the s
 
 ### Wiper Routine 
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-13.jpg){: width="972" height="589" }
-_Figure 13  – Powershell script Wipe routine_
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-35.jpg){: width="972" height="589" }
+
+Figure 13  – Powershell script Wipe routine
 
 Once the processing is complete, it frees up allocated resources and runs a command cmd which launches a hidden PowerShell session, waits for 500 milliseconds, and then attempts to forcefully remove an item specified by its path. The use of a hidden PowerShell window makes it less noticeable to the user, and the forced removal ensures that no confirmation prompt is shown before deleting the specified item. Finally, the routine returns 0 to indicate successful completion.
 
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-14.jpg){: width="972" height="589" }
-_Figure 14  – Set Wallpaper_
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-36.jpg){: width="972" height="589" }
 
-The last routine sets a custom wallpaper for the user's desktop. It first creates an image block with the specified dimensions and fills it with a character value (likely to generate a simple background pattern). Then, it reads the Arial font file to prepare for drawing text on the wallpaper. The function calculates the size and position of the text lines based on the provided text content. It then draws the text onto the image block with the specified font size. Afterward, it saves the image block as a JPEG file named "**bg.jpg)**" in the "**C:/Users/Public/**" directory. Next, the routine executes a series of system commands using **cmd.exe** to modify the Windows Registry entries related to desktop wallpaper settings. It deletes any existing wallpaper settings and adds new entries to specify the custom wallpaper file and set wallpaper style options. Finally, the function updates the desktop wallpaper using the **rundll32.exe** command, effectively setting the custom wallpaper for the user's desktop.
+Figure 14  – Set Wallpaper Routine
+
+The last routine sets a custom wallpaper for the user's desktop. It first creates an image block with the specified dimensions and fills it with a character value (likely to generate a simple background pattern). Then, it reads the Arial font file to prepare for drawing text on the wallpaper. The function calculates the size and position of the text lines based on the provided text content. It then draws the text onto the image block with the specified font size. Afterward, it saves the image block as a JPEG file named "**bg.jpg**" in the "**C:/Users/Public/**" directory. Next, the routine executes a series of system commands using **cmd.exe** to modify the Windows Registry entries related to desktop wallpaper settings. It deletes any existing wallpaper settings and adds new entries to specify the custom wallpaper file and set wallpaper style options. Finally, the function updates the desktop wallpaper using the **rundll32.exe** command, effectively setting the custom wallpaper for the user's desktop.
 
 
 ## Dynamic Analysis (Behavioral Analysis)
 ### Process tree 
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-15.jpg){: width="972" height="589" }
-_Figure 15 - depicts the process tree illustrating the execution of the Rhysida Ransomware.
-The process launches multiple instances of "cmd.exe" (Command Prompt) to execute various commands and modify registry settings. The "reg.exe" utility is used within the "cmd.exe" instances to perform registry operations. The tree shows that registry keys related to desktop wallpaper settings are being manipulated. The "Wallpaper" and "WallpaperStyle" values under "HKCU\\Control Panel\\Desktop" and "HKLM\\Software\Microsoft\\Windows\CurrentVersion\\Policies\\System" are modified. Additionally, the "NoChangingWallPaper" value under "HKCU\\Software\\Microsoft\Windows\\CurrentVersion\\Policies\\ActiveDesktop" and "HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\ActiveDesktop" is set to "1" which may prevent wallpaper changes. A "rundll32.exe" process is invoked to update per-user system parameters, potentially to apply the wallpaper changes. Finally, a hidden PowerShell script is launched to remove the "fury.exe" file located in a temporary directory._
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-37.jpg){: width="972" height="589" }
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-16.jpg){: width="972" height="589" }
+Figure 15 - depicts the process tree illustrating the execution of the Rhysida Ransomware.
+The process launches multiple instances of "cmd.exe" (Command Prompt) to execute various commands and modify registry settings. The "reg.exe" utility is used within the "cmd.exe" instances to perform registry operations. The tree shows that registry keys related to desktop wallpaper settings are being manipulated. The "Wallpaper" and "WallpaperStyle" values under "HKCU\\Control Panel\\Desktop" and "HKLM\\Software\Microsoft\\Windows\CurrentVersion\\Policies\\System" are modified. Additionally, the "NoChangingWallPaper" value under "HKCU\\Software\\Microsoft\Windows\\CurrentVersion\\Policies\\ActiveDesktop" and "HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\ActiveDesktop" is set to "1" which may prevent wallpaper changes. A "rundll32.exe" process is invoked to update per-user system parameters, potentially to apply the wallpaper changes. Finally, a hidden PowerShell script is launched to remove the "fury.exe" file located in a temporary directory.
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-17.jpg){: width="972" height="589" }
-_Figure 16 - shows the Rhysida Ransomware launching with a cmd.exe window. The ransomware proceeds to navigate through all files on all local drives. However, Rhysida excludes encryption from the following directories: : $Recycle.Bin, Boot, Documents and Settings, PerfLogs, Program Files, Program Files (x86), ProgramData, Recovery, System Volume Information, Windows, and $RECYCLE.BIN._
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-38.jpg){: width="972" height="589" }
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-18.jpg){: width="972" height="589" }
-_Figure 17 - The Rhysida ransomware-infected computer's wallpaper_
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-39.jpg){: width="972" height="589" }
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-19.jpg){: width="972" height="589" }
-_Figure 18 -  victims receive instructions to contact the attackers through a TOR-based portal, using the Unique ID provided in the ransom notes._
+Figure 16 - shows the Rhysida Ransomware launching with a cmd.exe window. The ransomware proceeds to navigate through all files on all local drives. However, Rhysida excludes encryption from the following directories: : $Recycle.Bin, Boot, Documents and Settings, PerfLogs, Program Files, Program Files (x86), ProgramData, Recovery, System Volume Information, Windows, and $RECYCLE.BIN.
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-20.jpg){: width="972" height="589" }
-_Figure 19 - the Rhysida TOR-based Portal prompts the victim to enter their unique ID, which they obtained from the ransom note._
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-40.jpg){: width="972" height="589" }
+
+Figure 17 - The Rhysida ransomware-infected computer's wallpaper
+
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-41.jpg){: width="972" height="589" }
+
+Figure 18 -  victims receive instructions to contact the attackers through a TOR-based portal, using the Unique ID provided in the ransom notes.
+
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-42.jpg){: width="972" height="589" }
+
+Figure 19 - the Rhysida TOR-based Portal prompts the victim to enter their unique ID, which they obtained from the ransom note.
 
 
-![Desktop View]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-21.jpg){: width="972" height="589" }
-_Figure 20 –  Rhysida TOR-based Payment Victim Portal allowing them to give the attackers more information for authentication and contact details._
+![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-43.jpg){: width="972" height="589" }
+
+Figure 20 –  Rhysida TOR-based Payment Victim Portal allowing them to give the attackers more information for authentication and contact details.
 
 ## **Executed Commands**
 
@@ -127,8 +146,8 @@ _Figure 20 –  Rhysida TOR-based Payment Victim Portal allowing them to give th
 | |/c cmd.exe /c reg delete "HKCU\Conttol Panel\Desktop" /v WallpaperStyle /f|
 | |/c cmd.exe /c reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\ActiveDesktop" /v NoChangingWallPaper /t REG_SZ /d 1 /f|
 | |/c cmd.exe /c reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\ActiveDesktop" /v NoChangingWallPaper /t REG_SZ /d 1 /f|
-| |/c cmd.exe /c reg add "HKCU\Control Panel\Desktop" /v Wallpaper /t REG_SZ /d "C:\Users\Public\bg.jpg)" /f|
-| |/c cmd.exe /c reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System" /v Wallpaper /t REG_SZ /d "C:\Users\Public\bg.jpg)" /f|
+| |/c cmd.exe /c reg add "HKCU\Control Panel\Desktop" /v Wallpaper /t REG_SZ /d "C:\Users\Public\bg.jpg" /f|
+| |/c cmd.exe /c reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System" /v Wallpaper /t REG_SZ /d "C:\Users\Public\bg.jpg" /f|
 | |/c cmd.exe /c reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System" /v WallpaperStyle /t REG_SZ /d 2 /f|
 | |/c cmd.exe /c reg add "HKCU\Control Panel\Desktop" /v WallpaperStyle /t REG_SZ /d 2 /f|
 | |/c rundll32.exe user32.dll,UpdatePerUserSystemParameters|
@@ -194,7 +213,7 @@ rule Rhysida_fury {
 
       $x2 = "cmd.exe /c reg add \"HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\" /v Wallpaper /t REG_SZ /d \"C:\\User" ascii
 
-      $x3 = "cmd.exe /c reg add \"HKCU\\Control Panel\\Desktop\" /v Wallpaper /t REG_SZ /d \"C:\\Users\\Public\\bg.jpg)\" /f" fullword ascii
+      $x3 = "cmd.exe /c reg add \"HKCU\\Control Panel\\Desktop\" /v Wallpaper /t REG_SZ /d \"C:\\Users\\Public\\bg.jpg\" /f" fullword ascii
 
       $x4 = "cmd.exe /c start powershell.exe -WindowStyle Hidden -Command Sleep -Milliseconds 500; Remove-Item -Force -Path \"" fullword ascii
 
@@ -224,7 +243,7 @@ rule Rhysida_fury {
 
       $s17 = "Rest assured, our team is committed to guiding you through this process. The journey to resolution begins with the use of the un" ascii
 
-      $s18 = "C:/Users/Public/bg.jpg)" fullword ascii
+      $s18 = "C:/Users/Public/bg.jpg" fullword ascii
 
       $s19 = "Error cleaning up spin_keys for thread " fullword ascii
 
