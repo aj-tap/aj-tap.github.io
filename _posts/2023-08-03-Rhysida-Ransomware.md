@@ -1,7 +1,7 @@
 ---
 title: Malware Analysis Rhysida Ransomware
-categories: [Malware_Analysis Reverse_Engineering]
-tags: [Rhysida, ransomware, malware]
+categories: [Malware_Analysis]
+tags: [rhysida, ransomware, malware]
 ---
 
 ![]({{site.baseurl}}/assets/img/2023-08-03-Rhysida-Ransomware-22.jpg){: width="972" height="589" }

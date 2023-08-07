@@ -1,6 +1,6 @@
 ---
 title: Portable Hacking Station - (Parrot Raspberry Pi)
-categories: [Cyberlabs RaspberryPi]
+categories: [Cyberlabs]
 tags: [red, raspberrypi, cyberlabs, linux]
 ---
 
