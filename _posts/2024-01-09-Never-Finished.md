@@ -6,7 +6,7 @@ tags: [philosophy, book]
 
 > "The world needs all of us to evolve into the very best version of ourselves. It is a moving target, not a one-time task. It is a lifelong quest for more knowledge, courage, humility, and belief. Because when you summon the strength and discipline to live that way, the only thing that limits your horizon is you."
 
-![](https://i.postimg.cc/FzQ1sYth/Solitude.png{: width="972" height="589" .w-75 .normal}
+![](https://i.postimg.cc/FzQ1sYth/Solitude.png){: width="972" height="589" .w-75 .normal}
 
 ## Summary 
 

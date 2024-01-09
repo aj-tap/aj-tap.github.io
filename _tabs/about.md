@@ -9,7 +9,7 @@ Hello, I'm Aj, an Autodidact Learner exploring into Computer Science and Philoso
 This website offers resources, security blogs, and articles. It's important to note that the opinions expressed here are solely mine—this platform serves as a personal exploration.  This website will include resources, security blogs, and articles.
 
 ## Badges 
-![zahlenZero](https://www.hackthebox.eu/badge/image/576041)
+![zahlenZero](https://www.hackthebox.eu/badge/image/576041){: .w-75 .normal}
 
 <script src="https://tryhackme.com/badge/994867"></script>
 
