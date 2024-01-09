@@ -51,16 +51,3 @@ The GuideM Certified Cyber Defense Professional certification represents an indi
 ![]({{site.baseurl}}/assets/img/ATD.png){: width="100%" .w-75 .normal}
 
 The Trend Micro Advanced Threat Analysis Training, spanning five days, immerses participants in a comprehensive exploration of key areas. Delve into Advanced Threat Essentials, unravel Cybercrime Attack Methodologies, master Cyberthreat Analyst Fundamentals, and refine skills in Advanced Incident Response and Examination. This training equips individuals with the knowledge and expertise to navigate the intricate landscape of cybersecurity, making it an indispensable experience for professionals aiming to fortify their skills in the realm of advanced threat analysis.
-
----
-## Follow me on Twitter 
-
-<section data-aos="fade-down">
-      <div class="container bg-dark py-5">
-          <div class="row">
-          </div>
-          <div class="py-5 p-lg-5"><section>
-<a class="twitter-timeline" data-lang="en" data-theme="dark" href="https://twitter.com/aj_tap?ref_src=twsrc%5Etfw">Tweets by aj_tap</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</section>
-
-
