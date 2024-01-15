@@ -6,7 +6,7 @@ order: 5
 
 Hello, I'm Aj, an Autodidact Learner exploring into Computer Science and Philosophy. From childhood tinkering with computers and games, my curiosity evolved into a passion for cybersecurity. 
 
-This website offers resources, security blogs, and articles. It's important to note that the opinions expressed here are solely mine—this platform serves as a personal exploration.  This website will include resources, security blogs, and articles.
+It's important to note that the opinions expressed here are solely mine—this platform serves as a personal exploration.  This website will include resources, security blogs, and articles.
 
 ## Badges 
 
@@ -24,11 +24,11 @@ Getting Started on Cybersecurity - 2022
 
 ## Certifications
 
-### [Certified in Cybersecurity Certification | (ISC)²](https://www.isc2.org/certifications/cc)
+### [Certified in Cybersecurity | (ISC)²](https://www.isc2.org/certifications/cc)
 
 ![]({{site.baseurl}}/assets/img/isc2cc.png){: width="100%" .w-75 .normal}
 
-The Certified in Cybersecurity Certification from (ISC)² validates my comprehensive knowledge and expertise in various domains of cybersecurity. This certification covers essential principles, practices, and controls required to protect information systems and mitigate risks effectively.
+The Certified in Cybersecurity from (ISC)² validates my comprehensive knowledge and expertise in various domains of cybersecurity. This certification covers essential principles, practices, and controls required to protect information systems and mitigate risks effectively.
 
 ### [eLearnSecurity Certified Malware Analysis Professional | eCMAP](https://certs.ine.com/b50d5776-e5a2-4580-8507-1423baae16bd#gs.2t36ad)
 
