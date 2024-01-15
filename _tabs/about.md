@@ -9,9 +9,16 @@ Hello, I'm Aj, an Autodidact Learner exploring into Computer Science and Philoso
 This website offers resources, security blogs, and articles. It's important to note that the opinions expressed here are solely mine—this platform serves as a personal exploration.  This website will include resources, security blogs, and articles.
 
 ## Badges 
-![zahlenZero](https://www.hackthebox.eu/badge/image/576041){: .w-75 .normal}
 
 <script src="https://tryhackme.com/badge/994867"></script>
+
+## Talks & Slides
+
+<media-tag src="https://files.cryptpad.fr/blob/13/135282ba27b257b1f1c6c963320ccf4815d25d1f6258846c" data-crypto-key="cryptpad:U7Q5zchJ5epLb5CkdlfJc9bidinnfJ305ak1z9ov4xI="></media-tag>
+
+<media-tag src="https://files.cryptpad.fr/blob/ed/ed3c6038a59887d9bffddd12d3f74afcdae1e5c5705c690d" data-crypto-key="cryptpad:0xEqUkz9UaFeOG0U5Dry+Lfap1LiC0RiPXsVBIcbrXM="></media-tag>
+
+<media-tag src="https://files.cryptpad.fr/blob/dd/ddd3209207048423cf1b0a9c90ecea8eb52d574d766e7f4f" data-crypto-key="cryptpad:IqpEbIfksNd+ojgFfM9Ceydq42PnLL0kKCcw70dM7i8="></media-tag>
 
 
 ## Certifications
