@@ -12,19 +12,15 @@ This website offers resources, security blogs, and articles. It's important to n
 
 <script src="https://tryhackme.com/badge/994867"></script>
 
+
 ## Talks & Slides
 
-<media-tag src="https://files.cryptpad.fr/blob/13/135282ba27b257b1f1c6c963320ccf4815d25d1f6258846c" data-crypto-key="cryptpad:U7Q5zchJ5epLb5CkdlfJc9bidinnfJ305ak1z9ov4xI="></media-tag>
-
-<media-tag src="https://files.cryptpad.fr/blob/ed/ed3c6038a59887d9bffddd12d3f74afcdae1e5c5705c690d" data-crypto-key="cryptpad:0xEqUkz9UaFeOG0U5Dry+Lfap1LiC0RiPXsVBIcbrXM="></media-tag>
-
-<media-tag src="https://files.cryptpad.fr/blob/dd/ddd3209207048423cf1b0a9c90ecea8eb52d574d766e7f4f" data-crypto-key="cryptpad:IqpEbIfksNd+ojgFfM9Ceydq42PnLL0kKCcw70dM7i8="></media-tag>
-
-<script src="https://cryptpad.fr/common/media-tag-nacl.min.js"></script>
-
-<script src="https://cryptpad.fr/common/media-tag-nacl.min.js"></script>
-
-<script src="https://cryptpad.fr/common/media-tag-nacl.min.js"></script>
+USAID: Basics of Ethical Hacking - 2023
+<object data= "{{site.baseurl}}/assets/slides/USAID.pdf" width="800" height="500"> </object> 
+Malware and Real life threats- 2023
+<object data= "{{site.baseurl}}/assets/slides/MARC.pdf" width="800" height="500"> </object> 
+Getting Started on Cybersecurity - 2022
+<object data= "{{site.baseurl}}/assets/slides/GSC.pdf" width="800" height="500"> </object> 
 
 ## Certifications
 
