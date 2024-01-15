@@ -20,6 +20,11 @@ This website offers resources, security blogs, and articles. It's important to n
 
 <media-tag src="https://files.cryptpad.fr/blob/dd/ddd3209207048423cf1b0a9c90ecea8eb52d574d766e7f4f" data-crypto-key="cryptpad:IqpEbIfksNd+ojgFfM9Ceydq42PnLL0kKCcw70dM7i8="></media-tag>
 
+<script src="https://cryptpad.fr/common/media-tag-nacl.min.js"></script>
+
+<script src="https://cryptpad.fr/common/media-tag-nacl.min.js"></script>
+
+<script src="https://cryptpad.fr/common/media-tag-nacl.min.js"></script>
 
 ## Certifications
 
