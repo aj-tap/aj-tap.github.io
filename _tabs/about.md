@@ -70,3 +70,7 @@ The Trend Micro Advanced Threat Analysis Training, spanning five days, immerses 
           <div class="py-5 p-lg-5"><section>
 <a class="twitter-timeline" data-lang="en" data-theme="dark" href="https://twitter.com/aj_tap?ref_src=twsrc%5Etfw">Tweets by aj_tap</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </section>
+
+## Scan my QR code for my linktr.ee
+
+ ![]({{site.baseurl}}/assets/img/linktree.png){: width="100%" .w-75 .normal}
